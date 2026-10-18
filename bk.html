@@ -66,6 +66,10 @@
         #screen-home {
             background: url("bg-home.png") center / 100% 100% no-repeat;
         }
+        body > #landscape-overlay ~ #landscape-overlay,
+        body > #game-wrapper ~ #game-wrapper {
+            display: none !important;
+        }
         #screen-home > .z-10.text-center,
         #eco-chef-svg,
         #screen-home > .btn.btn-blue.mt-8 {
@@ -310,16 +314,16 @@
             </svg>
 
             <div class="grid grid-cols-4 gap-4 z-10 w-4/5">
-                <button class="btn mission-art-button" onclick="navTo('mission-1')" aria-label="Dekomposisi">
+                <button class="btn mission-art-button" onclick="window.location.href='dekomposisi.html'" aria-label="Dekomposisi">
                     <img src="btn-dekomposisi.png" alt="Dekomposisi">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-2')" aria-label="Pengenalan Pola">
+                <button class="btn mission-art-button" onclick="window.location.href='pengenalanpola.html'" aria-label="Pengenalan Pola">
                     <img src="btn-pengenalanpola.png" alt="Pengenalan Pola">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-3')" aria-label="Abstraksi">
+                <button class="btn mission-art-button" onclick="window.location.href='abstraksi.html'" aria-label="Abstraksi">
                     <img src="btn-abstraksi.png" alt="Abstraksi">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-4')" aria-label="Algoritma">
+                <button class="btn mission-art-button" onclick="window.location.href='algoritma.html'" aria-label="Algoritma">
                     <img src="btn-algotitma.png" alt="Algoritma">
                 </button>
             </div>
@@ -631,7 +635,7 @@
 
     </div>
 
-    <script>
+    <script id="game-runtime">
         // --- Sistem Layouting & Scaling 16:9 ---
         function resizeGame() {
             const wrapper = document.getElementById('game-wrapper');
@@ -1423,6 +1427,8 @@
                  document.getElementById('landscape-overlay').style.display = 'none';
                  document.getElementById('game-wrapper').style.display = 'block';
             }
+              const mission = new URLSearchParams(window.location.search).get('mission');
+              if (mission) navTo(mission);
         });
 
     </script>
@@ -1693,16 +1699,16 @@
             </svg>
 
             <div class="grid grid-cols-4 gap-4 z-10 w-4/5">
-                <button class="btn mission-art-button" onclick="navTo('mission-1')" aria-label="Dekomposisi">
+                <button class="btn mission-art-button" onclick="window.location.href='dekomposisi.html'" aria-label="Dekomposisi">
                     <img src="btn-dekomposisi.png" alt="Dekomposisi">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-2')" aria-label="Pengenalan Pola">
+                <button class="btn mission-art-button" onclick="window.location.href='pengenalanpola.html'" aria-label="Pengenalan Pola">
                     <img src="btn-pengenalanpola.png" alt="Pengenalan Pola">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-3')" aria-label="Abstraksi">
+                <button class="btn mission-art-button" onclick="window.location.href='abstraksi.html'" aria-label="Abstraksi">
                     <img src="btn-abstraksi.png" alt="Abstraksi">
                 </button>
-                <button class="btn mission-art-button" onclick="navTo('mission-4')" aria-label="Algoritma">
+                <button class="btn mission-art-button" onclick="window.location.href='algoritma.html'" aria-label="Algoritma">
                     <img src="btn-algotitma.png" alt="Algoritma">
                 </button>
             </div>
@@ -2014,7 +2020,7 @@
 
     </div>
 
-    <script>
+    <script type="module">
         // --- Sistem Layouting & Scaling 16:9 ---
         function resizeGame() {
             const wrapper = document.getElementById('game-wrapper');
