@@ -63,6 +63,53 @@
             box-shadow: 0 5px 10px rgba(0,0,0,0.2);
         }
 
+        #screen-home {
+            background: url("bg-home.png") center / 100% 100% no-repeat;
+        }
+        #screen-home > .z-10.text-center,
+        #eco-chef-svg,
+        #screen-home > .btn.btn-blue.mt-8 {
+            display: none;
+        }
+        #screen-home > .grid.grid-cols-4 {
+            position: absolute;
+            bottom: 10px;
+            left: 1%;
+            width: 98%;
+            gap: 10px;
+        }
+        #screen-home .btn.mission-art-button {
+            height: auto;
+            aspect-ratio: 16 / 9;
+            padding: 0;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            box-shadow: none;
+            overflow: hidden;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        #screen-home .btn.mission-art-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            filter: drop-shadow(0 6px 5px rgba(0, 0, 0, 0.35));
+        }
+        #screen-home .btn.mission-art-button:active {
+            transform: scale(0.97);
+        }
+        .mission-art-button img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        #screen-home #btn-quiz {
+            position: absolute;
+            top: 67%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
         /* Tampilan Layar (Screens) */
         .screen {
             position: absolute;
@@ -263,17 +310,17 @@
             </svg>
 
             <div class="grid grid-cols-4 gap-4 z-10 w-4/5">
-                <button class="btn btn-green h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-1')">
-                    <span class="text-4xl mb-2">🧩</span> Dekomposisi
+                <button class="btn mission-art-button" onclick="navTo('mission-1')" aria-label="Dekomposisi">
+                    <img src="btn-dekomposisi.png" alt="Dekomposisi">
                 </button>
-                <button class="btn btn-blue h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-2')">
-                    <span class="text-4xl mb-2">🔍</span> Pengenalan Pola
+                <button class="btn mission-art-button" onclick="navTo('mission-2')" aria-label="Pengenalan Pola">
+                    <img src="btn-pengenalanpola.png" alt="Pengenalan Pola">
                 </button>
-                <button class="btn btn-orange h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-3')">
-                    <span class="text-4xl mb-2">✂️</span> Abstraksi
+                <button class="btn mission-art-button" onclick="navTo('mission-3')" aria-label="Abstraksi">
+                    <img src="btn-abstraksi.png" alt="Abstraksi">
                 </button>
-                <button class="btn btn-red h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-4')">
-                    <span class="text-4xl mb-2">🔀</span> Algoritma
+                <button class="btn mission-art-button" onclick="navTo('mission-4')" aria-label="Algoritma">
+                    <img src="btn-algotitma.png" alt="Algoritma">
                 </button>
             </div>
             
@@ -1646,17 +1693,17 @@
             </svg>
 
             <div class="grid grid-cols-4 gap-4 z-10 w-4/5">
-                <button class="btn btn-green h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-1')">
-                    <span class="text-4xl mb-2">🧩</span> Dekomposisi
+                <button class="btn mission-art-button" onclick="navTo('mission-1')" aria-label="Dekomposisi">
+                    <img src="btn-dekomposisi.png" alt="Dekomposisi">
                 </button>
-                <button class="btn btn-blue h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-2')">
-                    <span class="text-4xl mb-2">🔍</span> Pengenalan Pola
+                <button class="btn mission-art-button" onclick="navTo('mission-2')" aria-label="Pengenalan Pola">
+                    <img src="btn-pengenalanpola.png" alt="Pengenalan Pola">
                 </button>
-                <button class="btn btn-orange h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-3')">
-                    <span class="text-4xl mb-2">✂️</span> Abstraksi
+                <button class="btn mission-art-button" onclick="navTo('mission-3')" aria-label="Abstraksi">
+                    <img src="btn-abstraksi.png" alt="Abstraksi">
                 </button>
-                <button class="btn btn-red h-32 flex flex-col items-center justify-center text-lg" onclick="navTo('mission-4')">
-                    <span class="text-4xl mb-2">🔀</span> Algoritma
+                <button class="btn mission-art-button" onclick="navTo('mission-4')" aria-label="Algoritma">
+                    <img src="btn-algotitma.png" alt="Algoritma">
                 </button>
             </div>
             
