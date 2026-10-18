@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Tantangan Akhir Eco-Chef</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div id="landscape-overlay">
+        <svg viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mb-4 text-white"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><path d="M4 12v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"></path><path d="M4 12v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path><polyline points="8 12 12 16 16 12"></polyline></svg>
+        <h2 class="text-2xl font-bold mb-2">Putar Perangkatmu</h2>
+        <p class="mb-6 text-lg">Putar perangkatmu ke posisi mendatar (landscape) agar misi dapat dimainkan dengan nyaman.</p>
+    </div>
+<div id="game-wrapper">
+    <div class="kitchen-bg"></div>
+    <div class="shelf"></div>
+<div class="top-nav">
+            <button class="btn" onclick="navTo('home')" title="Ke Beranda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-wood)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </button>
+            <div class="flex gap-2">
+                <button class="btn" onclick="showGuide()" title="Panduan">?</button>
+                <button class="btn" id="btn-audio" onclick="toggleAudio()" title="Suara">🔊</button>
+                <button class="btn" onclick="toggleFullscreen()" title="Layar Penuh">🔲</button>
+            </div>
+        </div>
+<div id="screen-quiz" class="screen active">
+            <div class="flex flex-col items-center justify-center h-full px-20">
+                <div class="title-board bg-purple-600 mb-6 z-10">Tantangan Akhir Eco-Chef</div>
+                
+                <div class="panel w-full max-w-3xl flex flex-col z-10 bg-white">
+                    <div class="flex justify-between items-center border-b pb-2 mb-4">
+                        <span class="font-bold text-gray-500" id="quiz-progress">Soal 1 dari 5</span>
+                        <span class="bg-purple-100 text-purple-800 px-3 py-1 rounded-full text-sm font-bold">Uji Pemahaman Berpikir Komputasional</span>
+                    </div>
+                    
+                    <h2 class="text-2xl font-bold mb-6 text-gray-800 min-h-[80px]" id="quiz-question">Pertanyaan akan muncul di sini...</h2>
+                    
+                    <div class="flex flex-col gap-3" id="quiz-options">
+                        <!-- Opsi digenerate JS -->
+                    </div>
+                    
+                    <div id="quiz-feedback" class="mt-4 p-3 rounded hidden font-bold text-center text-lg"></div>
+                    
+                    <div class="mt-6 text-right">
+                        <button class="btn btn-purple hidden px-8 text-lg" id="btn-next-quiz" onclick="nextQuizQuestion()">Lanjut ➡️</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div id="modal-guide" class="modal-overlay">
+            <div class="panel max-w-lg w-full m-4 z-50">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-center text-orange-800">Panduan Misi</h2>
+                <ul class="list-disc pl-6 space-y-2 mb-6">
+                    <li>Gunakan mode <b>Layar Penuh (Fullscreen)</b> untuk pengalaman terbaik.</li>
+                    <li>Bantu Eco-Chef dengan mengikuti instruksi di setiap misi.</li>
+                    <li>Untuk memindahkan kartu/blok, <b>klik dan tahan (seret)</b> lalu lepas di kotak tujuan. Pada HP, <b>klik kartu lalu klik kotak tujuan</b> juga bisa.</li>
+                    <li>Gunakan tombol <b>✔️ Periksa</b> untuk mengecek jawabanmu.</li>
+                    <li>Jika salah, baca petunjuk dan coba lagi!</li>
+                    <li>Tombol <b>🏠 Home</b> akan membawamu kembali ke menu utama.</li>
+                </ul>
+                <button class="btn btn-blue w-full text-center" onclick="closeModal('modal-guide')">Tutup Panduan</button>
+            </div>
+        </div>
+<div id="modal-alert" class="modal-overlay">
+            <div class="panel max-w-md w-full m-4 z-50 text-center flex flex-col items-center">
+                <div id="alert-icon" class="text-6xl mb-2">✅</div>
+                <h2 id="alert-title" class="text-2xl font-bold mb-2">Judul</h2>
+                <p id="alert-msg" class="mb-6 text-gray-700">Pesan alert di sini...</p>
+                <div id="alert-actions" class="flex gap-2 justify-center w-full">
+                    <button class="btn btn-blue flex-1" onclick="closeModal('modal-alert')">Tutup</button>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

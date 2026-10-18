@@ -1,23 +1,119 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Misi 4: Algoritma | Eco-Chef</title>
-	<style>
-		* { box-sizing: border-box; }
-		html, body { width: 100%; height: 100%; margin: 0; }
-		body { overflow: hidden; background: #263746; font-family: sans-serif; }
-		#stage { width: 100vw; height: 100vh; display: grid; place-items: center; }
-		iframe { display: block; width: min(100vw, 177.7778vh); height: min(100vh, 56.25vw); aspect-ratio: 16 / 9; border: 0; }
-		#rotate { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; padding: 24px; color: white; text-align: center; background: #263746; font-size: 1.25rem; font-weight: 700; }
-		@media (orientation: portrait) { iframe { display: none; } #rotate { display: flex; } }
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Misi 4: Algoritma</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
-	<main id="stage">
-		<iframe src="bk.html?mission=mission-4" title="Misi Algoritma" allow="fullscreen" allowfullscreen></iframe>
-	</main>
-	<div id="rotate">Putar perangkat ke posisi mendatar untuk memainkan misi.</div>
+<div id="landscape-overlay">
+        <svg viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mb-4 text-white"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><path d="M4 12v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"></path><path d="M4 12v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path><polyline points="8 12 12 16 16 12"></polyline></svg>
+        <h2 class="text-2xl font-bold mb-2">Putar Perangkatmu</h2>
+        <p class="mb-6 text-lg">Putar perangkatmu ke posisi mendatar (landscape) agar misi dapat dimainkan dengan nyaman.</p>
+    </div>
+<div id="game-wrapper">
+    <div class="kitchen-bg"></div>
+    <div class="shelf"></div>
+<div class="top-nav">
+            <button class="btn" onclick="navTo('home')" title="Ke Beranda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-wood)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </button>
+            <div class="flex gap-2">
+                <button class="btn" onclick="showGuide()" title="Panduan">?</button>
+                <button class="btn" id="btn-audio" onclick="toggleAudio()" title="Suara">🔊</button>
+                <button class="btn" onclick="toggleFullscreen()" title="Layar Penuh">🔲</button>
+            </div>
+        </div>
+<div id="screen-mission-4" class="screen active">
+            <div class="flex flex-col h-full px-6 py-2">
+                <div class="flex items-center justify-between mb-2 z-10">
+                    <div class="title-board bg-red-600">Misi 4: Algoritma</div>
+                    <div class="panel py-1 px-4 text-sm text-center flex-1 ml-4">
+                        Susun langkah memasak nasi goreng secara berurutan! Seret blok dari kiri ke kanan.
+                    </div>
+                </div>
+
+                <div class="flex flex-1 gap-2 z-10 h-[80%]">
+                    <!-- Daftar Langkah Acak -->
+                    <div class="w-1/3 panel p-2 flex flex-col bg-blue-50">
+                        <h3 class="font-bold text-center text-blue-800 mb-2 border-b border-blue-200 pb-1">Daftar Langkah (Acak)</h3>
+                        <div id="m4-source" class="flex-1 flex flex-col gap-2 overflow-y-auto pr-1 dropzone custom-scroll" ondragover="allowDrop(event)" ondrop="drop(event, 'm4-source')">
+                            <!-- Diisi JS -->
+                        </div>
+                    </div>
+
+                    <!-- Area Susun -->
+                    <div class="w-1/3 panel p-2 flex flex-col bg-yellow-50 border-red-200 border-2">
+                        <h3 class="font-bold text-center text-red-800 mb-2 border-b border-red-200 pb-1">Urutan Langkah</h3>
+                        <div id="m4-target" class="flex-1 flex flex-col gap-1 overflow-y-auto pr-1 custom-scroll">
+                            <!-- Slot diisi JS -->
+                        </div>
+                    </div>
+
+                    <!-- Area Animasi & Kontrol -->
+                    <div class="w-1/3 flex flex-col gap-2">
+                        <div class="panel p-2 flex justify-between">
+                            <button class="btn btn-green flex-1" id="btn-run-m4" onclick="runAlgorithm()">▶️ Jalankan</button>
+                            <button class="btn ml-2" onclick="initM4()">🔄 Reset</button>
+                        </div>
+                        <div class="panel flex-1 bg-gray-100 flex flex-col items-center justify-center text-center relative border-4 border-gray-300">
+                            <h3 class="absolute top-2 font-bold w-full bg-white/80 py-1">Animasi</h3>
+                            
+                            <!-- Container Animasi Wajan -->
+                            <div class="relative w-48 h-32 mt-6">
+                                <!-- Kompor -->
+                                <div class="absolute bottom-0 w-full h-4 bg-gray-800 rounded-lg"></div>
+                                <div id="m4-anim-fire" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-32 h-6 flex justify-around opacity-0 transition-opacity">
+                                    <div class="w-4 h-6 bg-red-500 rounded-full animate-pulse blur-[2px]"></div>
+                                    <div class="w-4 h-8 bg-yellow-500 rounded-full animate-pulse blur-[2px]"></div>
+                                    <div class="w-4 h-6 bg-red-500 rounded-full animate-pulse blur-[2px]"></div>
+                                </div>
+                                <!-- Wajan -->
+                                <div id="m4-anim-wok" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-40 h-16 bg-gray-900 rounded-b-full border-t-4 border-gray-700 flex items-end justify-center overflow-hidden z-10 transition-transform">
+                                    <!-- Isi wajan -->
+                                    <div id="m4-anim-contents" class="text-3xl mb-1 flex items-end"></div>
+                                </div>
+                                <!-- Hasil Akhir / Piring -->
+                                <div id="m4-anim-plate" class="absolute bottom-4 left-1/2 -translate-x-1/2 w-40 h-8 bg-white rounded-[100%] border border-gray-300 shadow-md opacity-0 z-20 flex justify-center items-center">
+                                    <span id="m4-anim-result" class="text-3xl -mt-4 opacity-0 transition-opacity">🍛</span>
+                                </div>
+                            </div>
+                            
+                            <div id="m4-anim-text" class="mt-4 text-sm font-bold text-gray-700 min-h-[40px] px-2 bg-white/80 rounded p-1">
+                                Susun semua langkah, lalu klik Jalankan.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div id="modal-guide" class="modal-overlay">
+            <div class="panel max-w-lg w-full m-4 z-50">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-center text-orange-800">Panduan Misi</h2>
+                <ul class="list-disc pl-6 space-y-2 mb-6">
+                    <li>Gunakan mode <b>Layar Penuh (Fullscreen)</b> untuk pengalaman terbaik.</li>
+                    <li>Bantu Eco-Chef dengan mengikuti instruksi di setiap misi.</li>
+                    <li>Untuk memindahkan kartu/blok, <b>klik dan tahan (seret)</b> lalu lepas di kotak tujuan. Pada HP, <b>klik kartu lalu klik kotak tujuan</b> juga bisa.</li>
+                    <li>Gunakan tombol <b>✔️ Periksa</b> untuk mengecek jawabanmu.</li>
+                    <li>Jika salah, baca petunjuk dan coba lagi!</li>
+                    <li>Tombol <b>🏠 Home</b> akan membawamu kembali ke menu utama.</li>
+                </ul>
+                <button class="btn btn-blue w-full text-center" onclick="closeModal('modal-guide')">Tutup Panduan</button>
+            </div>
+        </div>
+<div id="modal-alert" class="modal-overlay">
+            <div class="panel max-w-md w-full m-4 z-50 text-center flex flex-col items-center">
+                <div id="alert-icon" class="text-6xl mb-2">✅</div>
+                <h2 id="alert-title" class="text-2xl font-bold mb-2">Judul</h2>
+                <p id="alert-msg" class="mb-6 text-gray-700">Pesan alert di sini...</p>
+                <div id="alert-actions" class="flex gap-2 justify-center w-full">
+                    <button class="btn btn-blue flex-1" onclick="closeModal('modal-alert')">Tutup</button>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="game.js"></script>
 </body>
 </html>

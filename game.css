@@ -1,0 +1,252 @@
+:root {
+            --color-orange: #F97316;
+            --color-wood: #8B5A2B;
+            --color-wood-light: #DEB887;
+            --color-cream: #FFFDD0;
+            --color-blue: #3B82F6;
+            --color-green: #22C55E;
+            --color-red: #EF4444;
+            --color-text: #333333;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #2c3e50; /* Latar belakang luar panggung */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden; /* Mencegah scroll di body */
+            color: var(--color-text);
+            touch-action: none; /* Mencegah pull-to-refresh di mobile */
+        }
+
+        /* Container utama dengan rasio 16:9 tetap */
+        #game-wrapper {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 1280px; /* Ukuran dasar */
+            height: 720px;
+            background: linear-gradient(to bottom, #a1c4fd 0%, #c2e9fb 100%); /* Langit dapur */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+            transform-origin: center center;
+        }
+
+        /* Dekorasi latar belakang dapur */
+        .kitchen-bg {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background-color: var(--color-wood-light);
+            border-top: 15px solid var(--color-wood);
+            z-index: 0;
+        }
+        .shelf {
+            position: absolute;
+            top: 15%;
+            width: 80%;
+            left: 10%;
+            height: 15px;
+            background-color: var(--color-wood);
+            border-radius: 10px;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+        }
+
+        #screen-home {
+            background: url("bg-home.png") center / 100% 100% no-repeat;
+        }
+        body > #landscape-overlay ~ #landscape-overlay,
+        body > #game-wrapper ~ #game-wrapper {
+            display: none !important;
+        }
+        #screen-home > .z-10.text-center,
+        #eco-chef-svg,
+        #screen-home > .btn.btn-blue.mt-8 {
+            display: none;
+        }
+        #screen-home > .grid.grid-cols-4 {
+            position: absolute;
+            bottom: 10px;
+            left: 1%;
+            width: 98%;
+            gap: 10px;
+        }
+        #screen-home .btn.mission-art-button {
+            height: auto;
+            aspect-ratio: 16 / 9;
+            padding: 0;
+            border: 0;
+            border-radius: 12px;
+            background: transparent;
+            box-shadow: none;
+            overflow: hidden;
+            transition: transform 0.2s ease, filter 0.2s ease;
+        }
+        #screen-home .btn.mission-art-button:hover {
+            transform: translateY(-4px) scale(1.03);
+            filter: drop-shadow(0 6px 5px rgba(0, 0, 0, 0.35));
+        }
+        #screen-home .btn.mission-art-button:active {
+            transform: scale(0.97);
+        }
+        .mission-art-button img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        #screen-home #btn-quiz {
+            position: absolute;
+            top: 67%;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+        }
+
+        /* Tampilan Layar (Screens) */
+        .screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 10;
+            padding-top: 70px; /* Ruang untuk navbar */
+            box-sizing: border-box;
+        }
+        .screen.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        .top-nav {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            right: 10px;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn {
+            background-color: white;
+            border: 4px solid var(--color-wood);
+            border-radius: 15px;
+            padding: 10px 20px;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            transition: transform 0.1s, box-shadow 0.1s;
+            user-select: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0px rgba(0,0,0,0.2);
+        }
+        .btn-green { background-color: var(--color-green); color: white; border-color: #166534; }
+        .btn-blue { background-color: var(--color-blue); color: white; border-color: #1e3a8a; }
+        .btn-orange { background-color: var(--color-orange); color: white; border-color: #9a3412; }
+        .btn-red { background-color: var(--color-red); color: white; border-color: #7f1d1d; }
+        .btn-disabled { opacity: 0.5; cursor: not-allowed; pointer-events: none; }
+
+        .panel {
+            background-color: white;
+            border: 4px solid var(--color-wood-light);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+
+        .title-board {
+            background-color: var(--color-wood);
+            color: white;
+            padding: 10px 30px;
+            border-radius: 30px;
+            border: 4px solid #5c3a21;
+            font-size: 24px;
+            font-weight: 900;
+            text-shadow: 2px 2px 0 #333;
+            display: inline-block;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+        }
+
+        /* Drag and Drop Styles */
+        .draggable {
+            cursor: grab;
+            user-select: none;
+            touch-action: none; /* Penting untuk touch drag */
+        }
+        .draggable:active { cursor: grabbing; }
+        .dropzone {
+            min-height: 120px;
+            border: 4px dashed #cbd5e1;
+            border-radius: 15px;
+            background-color: rgba(255,255,255,0.5);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 10px;
+            transition: background-color 0.3s;
+        }
+        .dropzone.drag-over {
+            background-color: rgba(255, 253, 208, 0.8);
+            border-color: var(--color-orange);
+        }
+
+        /* Landscape Overlay */
+        #landscape-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background-color: #2c3e50;
+            z-index: 9999;
+            color: white;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        @media screen and (orientation: portrait) {
+            #landscape-overlay { display: flex; }
+            #game-wrapper { display: none; }
+        }
+        @media screen and (orientation: landscape) {
+            #landscape-overlay { display: none !important; }
+            #game-wrapper { display: block; }
+        }
+
+        /* Modal / Dialog */
+        .modal-overlay {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+        .modal-overlay.active { display: flex; animation: fadeIn 0.3s; }
+        
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes pop { 0% { transform: scale(0.8); } 50% { transform: scale(1.1); } 100% { transform: scale(1); } }
+        @keyframes stir { 0% { transform: rotate(0deg); } 25% { transform: rotate(-20deg); } 75% { transform: rotate(20deg); } 100% { transform: rotate(0deg); } }
+
+        /* Khusus Sertifikat untuk Cetak */
+        @media print {
+            body * { visibility: hidden; }
+            #print-area, #print-area * { visibility: visible; }
+            #print-area { position: absolute; left: 0; top: 0; width: 100%; height: 100%; background: white !important; }
+            .no-print { display: none !important; }
+        }

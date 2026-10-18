@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Sertifikat Eco-Chef</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="game.css">
+</head>
+<body>
+<div id="landscape-overlay">
+        <svg viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mb-4 text-white"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><path d="M4 12v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"></path><path d="M4 12v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path><polyline points="8 12 12 16 16 12"></polyline></svg>
+        <h2 class="text-2xl font-bold mb-2">Putar Perangkatmu</h2>
+        <p class="mb-6 text-lg">Putar perangkatmu ke posisi mendatar (landscape) agar misi dapat dimainkan dengan nyaman.</p>
+    </div>
+<div id="game-wrapper">
+    <div class="kitchen-bg"></div>
+    <div class="shelf"></div>
+<div class="top-nav">
+            <button class="btn" onclick="navTo('home')" title="Ke Beranda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-wood)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </button>
+            <div class="flex gap-2">
+                <button class="btn" onclick="showGuide()" title="Panduan">?</button>
+                <button class="btn" id="btn-audio" onclick="toggleAudio()" title="Suara">🔊</button>
+                <button class="btn" onclick="toggleFullscreen()" title="Layar Penuh">🔲</button>
+            </div>
+        </div>
+<div id="screen-certificate" class="screen bg-white" style="background:none;"> <!-- Hapus background gradien panggung -->
+            <div class="flex flex-col items-center justify-center h-full z-10 w-full bg-white relative">
+                
+                <div id="print-area" class="w-[800px] h-[550px] border-[10px] border-double border-orange-800 p-8 relative bg-orange-50 text-center flex flex-col items-center shadow-2xl">
+                    <!-- Ornamen -->
+                    <div class="absolute top-4 left-4 text-4xl">👨‍🍳</div>
+                    <div class="absolute top-4 right-4 text-4xl">🤖</div>
+                    
+                    <h1 class="text-4xl font-black text-orange-800 mb-2 tracking-widest mt-4">SERTIFIKAT PENYELESAIAN MISI</h1>
+                    <div class="w-2/3 h-1 bg-orange-800 mb-6"></div>
+                    
+                    <p class="text-lg text-gray-700 mb-2">Diberikan dengan bangga kepada:</p>
+                    <input type="text" id="cert-name" placeholder="[Ketik Nama Kamu Di Sini]" class="text-3xl font-bold text-center border-b-2 border-dashed border-gray-400 bg-transparent focus:outline-none mb-6 w-3/4 pb-2" maxlength="30">
+                    
+                    <p class="text-md text-gray-700 mb-4 px-10 italic">
+                        "Telah berhasil menyelesaikan Misi Eco-Chef dan menguasai empat landasan Berpikir Komputasional: 
+                        <b>Dekomposisi, Pengenalan Pola, Abstraksi, dan Algoritma.</b>"
+                    </p>
+                    
+                    <div class="flex gap-8 my-6 w-full justify-center">
+                        <div class="bg-white border-2 border-orange-300 rounded-lg p-4 w-1/3 shadow-sm">
+                            <div class="text-sm text-gray-500 font-bold uppercase">Skor Akhir</div>
+                            <div class="text-5xl font-black text-green-600" id="cert-score">100</div>
+                        </div>
+                        <div class="bg-white border-2 border-orange-300 rounded-lg p-4 w-1/3 shadow-sm text-left flex flex-col justify-center">
+                            <div class="text-sm text-green-700">✔️ Benar: <span id="cert-correct">5</span></div>
+                            <div class="text-sm text-red-700">❌ Salah: <span id="cert-wrong">0</span></div>
+                            <div class="text-sm text-blue-700 mt-1">📅 <span id="cert-date"></span></div>
+                        </div>
+                    </div>
+                    
+                    <div class="absolute bottom-6 left-0 w-full text-xs text-gray-500 font-bold">
+                        Pengembang: Syahidah Humairoh — SMP Negeri 126 Jakarta
+                    </div>
+                </div>
+
+                <div class="mt-6 flex gap-4 no-print z-50">
+                    <button class="btn btn-blue" onclick="window.print()">🖨️ Cetak / Simpan PDF</button>
+                    <button class="btn btn-orange" onclick="resetAll()">🔄 Main Lagi</button>
+                    <button class="btn" onclick="navTo('home')">🏠 Ke Beranda</button>
+                </div>
+            </div>
+        </div>
+<div id="modal-guide" class="modal-overlay">
+            <div class="panel max-w-lg w-full m-4 z-50">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-center text-orange-800">Panduan Misi</h2>
+                <ul class="list-disc pl-6 space-y-2 mb-6">
+                    <li>Gunakan mode <b>Layar Penuh (Fullscreen)</b> untuk pengalaman terbaik.</li>
+                    <li>Bantu Eco-Chef dengan mengikuti instruksi di setiap misi.</li>
+                    <li>Untuk memindahkan kartu/blok, <b>klik dan tahan (seret)</b> lalu lepas di kotak tujuan. Pada HP, <b>klik kartu lalu klik kotak tujuan</b> juga bisa.</li>
+                    <li>Gunakan tombol <b>✔️ Periksa</b> untuk mengecek jawabanmu.</li>
+                    <li>Jika salah, baca petunjuk dan coba lagi!</li>
+                    <li>Tombol <b>🏠 Home</b> akan membawamu kembali ke menu utama.</li>
+                </ul>
+                <button class="btn btn-blue w-full text-center" onclick="closeModal('modal-guide')">Tutup Panduan</button>
+            </div>
+        </div>
+<div id="modal-alert" class="modal-overlay">
+            <div class="panel max-w-md w-full m-4 z-50 text-center flex flex-col items-center">
+                <div id="alert-icon" class="text-6xl mb-2">✅</div>
+                <h2 id="alert-title" class="text-2xl font-bold mb-2">Judul</h2>
+                <p id="alert-msg" class="mb-6 text-gray-700">Pesan alert di sini...</p>
+                <div id="alert-actions" class="flex gap-2 justify-center w-full">
+                    <button class="btn btn-blue flex-1" onclick="closeModal('modal-alert')">Tutup</button>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="game.js"></script>
+</body>
+</html>

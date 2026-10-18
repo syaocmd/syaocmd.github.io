@@ -1,23 +1,112 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Misi 3: Abstraksi | Eco-Chef</title>
-	<style>
-		* { box-sizing: border-box; }
-		html, body { width: 100%; height: 100%; margin: 0; }
-		body { overflow: hidden; background: #263746; font-family: sans-serif; }
-		#stage { width: 100vw; height: 100vh; display: grid; place-items: center; }
-		iframe { display: block; width: min(100vw, 177.7778vh); height: min(100vh, 56.25vw); aspect-ratio: 16 / 9; border: 0; }
-		#rotate { display: none; position: fixed; inset: 0; align-items: center; justify-content: center; padding: 24px; color: white; text-align: center; background: #263746; font-size: 1.25rem; font-weight: 700; }
-		@media (orientation: portrait) { iframe { display: none; } #rotate { display: flex; } }
-	</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Misi 3: Abstraksi</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="game.css">
 </head>
 <body>
-	<main id="stage">
-		<iframe src="bk.html?mission=mission-3" title="Misi Abstraksi" allow="fullscreen" allowfullscreen></iframe>
-	</main>
-	<div id="rotate">Putar perangkat ke posisi mendatar untuk memainkan misi.</div>
+<div id="landscape-overlay">
+        <svg viewBox="0 0 24 24" width="80" height="80" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="mb-4 text-white"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line><path d="M4 12v-2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v2"></path><path d="M4 12v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path><polyline points="8 12 12 16 16 12"></polyline></svg>
+        <h2 class="text-2xl font-bold mb-2">Putar Perangkatmu</h2>
+        <p class="mb-6 text-lg">Putar perangkatmu ke posisi mendatar (landscape) agar misi dapat dimainkan dengan nyaman.</p>
+    </div>
+<div id="game-wrapper">
+    <div class="kitchen-bg"></div>
+    <div class="shelf"></div>
+<div class="top-nav">
+            <button class="btn" onclick="navTo('home')" title="Ke Beranda">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-wood)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </button>
+            <div class="flex gap-2">
+                <button class="btn" onclick="showGuide()" title="Panduan">?</button>
+                <button class="btn" id="btn-audio" onclick="toggleAudio()" title="Suara">🔊</button>
+                <button class="btn" onclick="toggleFullscreen()" title="Layar Penuh">🔲</button>
+            </div>
+        </div>
+<div id="screen-mission-3" class="screen active">
+            <div class="flex flex-col h-full px-6 py-2">
+                <div class="flex items-center justify-between mb-2 z-10">
+                    <div class="title-board bg-orange-500">Misi 3: Abstraksi</div>
+                    <div class="text-sm font-bold bg-white px-4 py-1 rounded-full text-orange-800">Fokus pada yang Penting!</div>
+                </div>
+
+                <div class="flex flex-1 gap-2 z-10">
+                    <!-- Kiri: Pesanan & Masak -->
+                    <div class="flex-1 flex flex-col gap-2">
+                        <div class="panel p-2 flex gap-2 h-1/2">
+                            <div class="w-1/3 bg-orange-100 p-2 rounded border border-orange-300 text-sm">
+                                <div class="font-bold text-center border-b border-orange-300 pb-1 mb-1">Tiket Pesanan #026</div>
+                                <div><b>Menu:</b> Nasi Goreng</div>
+                                <div><b>Level Pedas:</b> 3 (🌶️🌶️🌶️)</div>
+                                <div class="text-red-600 mt-2"><b>Catatan:</b> Tanpa daun bawang.</div>
+                            </div>
+                            <div class="flex-1 border border-gray-300 rounded p-1 flex flex-wrap content-start gap-1 overflow-y-auto" id="m3-ingredients-panel">
+                                <!-- Bahan-bahan diisi JS -->
+                            </div>
+                        </div>
+                        <div class="panel p-2 flex-1 flex flex-col items-center justify-center relative bg-gray-100">
+                            <h3 class="font-bold absolute top-2">Wajan Eco-Chef</h3>
+                            <!-- Ilustrasi Wajan -->
+                            <div id="m3-wok-area" class="w-48 h-24 bg-gray-800 rounded-b-full mt-4 flex items-end justify-center pb-2 relative overflow-hidden transition-all duration-300 border-t-8 border-gray-900">
+                                <div id="m3-wok-contents" class="flex gap-1"></div>
+                            </div>
+                            <div class="mt-2 text-sm text-center min-h-[40px]" id="m3-wok-status">Klik bahan di atas untuk memasukkan ke wajan.</div>
+                            <button class="btn btn-green mt-2 btn-disabled" id="btn-m3-cook" onclick="cookM3()">🔥 Aduk!</button>
+                        </div>
+                    </div>
+
+                    <!-- Kanan: Pilah Informasi -->
+                    <div class="flex-1 panel p-2 flex flex-col bg-orange-50 opacity-50 pointer-events-none" id="m3-abstraction-panel">
+                        <h3 class="font-bold text-center text-orange-800 mb-2">Mana yang Penting?</h3>
+                        <p class="text-xs text-center mb-2">Dari kegiatan tadi, kelompokkan informasi berikut untuk membuat program memasak.</p>
+                        
+                        <div class="flex gap-2 flex-1">
+                            <div class="flex-1 border-2 border-green-500 rounded bg-green-50 p-2 flex flex-col">
+                                <div class="text-center font-bold text-green-700 mb-2 border-b border-green-200">✔️ Penting<br><span class="text-xs font-normal">(Letakkan di sini)</span></div>
+                                <div id="m3-drop-important" class="flex-1 flex flex-col gap-1 dropzone" ondragover="allowDrop(event)" ondrop="drop(event, 'important')"></div>
+                            </div>
+                            <div class="flex-1 border-2 border-red-500 rounded bg-red-50 p-2 flex flex-col">
+                                <div class="text-center font-bold text-red-700 mb-2 border-b border-red-200">🗑️ Tidak Penting<br><span class="text-xs font-normal">(Seret ke sini)</span></div>
+                                <div id="m3-drop-unimportant" class="flex-1 flex flex-col gap-1 dropzone" ondragover="allowDrop(event)" ondrop="drop(event, 'unimportant')"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-2 p-2 border border-gray-300 rounded bg-white flex flex-wrap gap-1 justify-center min-h-[60px]" id="m3-info-cards">
+                            <!-- Kartu info diisi JS -->
+                        </div>
+                        <button class="btn btn-orange w-full mt-2" onclick="checkM3_Part2()">Periksa Pengelompokan</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+<div id="modal-guide" class="modal-overlay">
+            <div class="panel max-w-lg w-full m-4 z-50">
+                <h2 class="text-2xl font-bold mb-4 border-b pb-2 text-center text-orange-800">Panduan Misi</h2>
+                <ul class="list-disc pl-6 space-y-2 mb-6">
+                    <li>Gunakan mode <b>Layar Penuh (Fullscreen)</b> untuk pengalaman terbaik.</li>
+                    <li>Bantu Eco-Chef dengan mengikuti instruksi di setiap misi.</li>
+                    <li>Untuk memindahkan kartu/blok, <b>klik dan tahan (seret)</b> lalu lepas di kotak tujuan. Pada HP, <b>klik kartu lalu klik kotak tujuan</b> juga bisa.</li>
+                    <li>Gunakan tombol <b>✔️ Periksa</b> untuk mengecek jawabanmu.</li>
+                    <li>Jika salah, baca petunjuk dan coba lagi!</li>
+                    <li>Tombol <b>🏠 Home</b> akan membawamu kembali ke menu utama.</li>
+                </ul>
+                <button class="btn btn-blue w-full text-center" onclick="closeModal('modal-guide')">Tutup Panduan</button>
+            </div>
+        </div>
+<div id="modal-alert" class="modal-overlay">
+            <div class="panel max-w-md w-full m-4 z-50 text-center flex flex-col items-center">
+                <div id="alert-icon" class="text-6xl mb-2">✅</div>
+                <h2 id="alert-title" class="text-2xl font-bold mb-2">Judul</h2>
+                <p id="alert-msg" class="mb-6 text-gray-700">Pesan alert di sini...</p>
+                <div id="alert-actions" class="flex gap-2 justify-center w-full">
+                    <button class="btn btn-blue flex-1" onclick="closeModal('modal-alert')">Tutup</button>
+                </div>
+            </div>
+        </div>
+</div>
+<script src="game.js"></script>
 </body>
 </html>
