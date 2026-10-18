@@ -216,6 +216,7 @@
         // Alternatif Klik untuk layar sentuh
         let selectedItemForMove = null;
         function handleItemClick(ev) {
+            ev.stopPropagation();
             const item = ev.currentTarget;
             if(selectedItemForMove === item) {
                 // Batal pilih
