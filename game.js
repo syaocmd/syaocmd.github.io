@@ -785,6 +785,10 @@
                 document.getElementById('landscape-overlay').style.display = 'none';
                 document.getElementById('game-wrapper').style.display = 'block';
             }
+            if (document.getElementById('screen-mission-1')) initM1();
+            if (document.getElementById('screen-mission-2')) initM2();
+            if (document.getElementById('screen-mission-3')) initM3();
+            if (document.getElementById('screen-mission-4')) initM4();
             if (document.getElementById('screen-quiz')) initQuiz();
             if (document.getElementById('screen-certificate')) {
                 document.getElementById('cert-score').innerText = state.quizScore;

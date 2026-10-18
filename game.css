@@ -61,17 +61,16 @@
         body > #game-wrapper ~ #game-wrapper {
             display: none !important;
         }
-        #screen-home > .z-10.text-center,
-        #eco-chef-svg,
-        #screen-home > .btn.btn-blue.mt-8 {
-            display: none;
-        }
         #screen-home > .grid.grid-cols-4 {
             position: absolute;
             bottom: 10px;
             left: 1%;
             width: 98%;
             gap: 10px;
+        }
+        #screen-home .btn.btn-blue.mt-8 {
+            display: inline-flex;
+            margin-top: 1.5rem;
         }
         #screen-home .btn.mission-art-button {
             height: auto;
