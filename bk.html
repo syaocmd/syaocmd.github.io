@@ -24,32 +24,7 @@
             </div>
         </div>
 <div id="screen-home" class="screen active flex flex-col items-center justify-center pt-0">
-            <div class="z-10 text-center mb-8">
-                <div class="title-board text-4xl mb-2">MISI ECO-CHEF</div>
-                <div class="text-xl font-bold text-gray-800 bg-white/80 px-4 py-1 rounded-full inline-block">Petualangan Berpikir Komputasional</div>
-            </div>
-            
-            <!-- Karakter Eco-Chef (SVG Inline Sederhana) -->
-            <svg width="150" height="150" viewBox="0 0 200 200" class="z-10 mb-6 drop-shadow-xl" id="eco-chef-svg">
-                <!-- Topi -->
-                <path d="M60 70 Q 50 40 80 40 Q 100 20 120 40 Q 150 40 140 70 Z" fill="white" stroke="#ccc" stroke-width="2"/>
-                <rect x="70" y="65" width="60" height="20" fill="white" stroke="#ccc" stroke-width="2"/>
-                <!-- Kepala -->
-                <rect x="50" y="85" width="100" height="70" rx="20" fill="#f0f0f0" stroke="#333" stroke-width="4"/>
-                <!-- Layar / Wajah -->
-                <rect x="60" y="95" width="80" height="50" rx="10" fill="#1e293b"/>
-                <!-- Mata Senyum -->
-                <path d="M75 115 Q 85 105 95 115" fill="none" stroke="#0ea5e9" stroke-width="6" stroke-linecap="round"/>
-                <path d="M105 115 Q 115 105 125 115" fill="none" stroke="#0ea5e9" stroke-width="6" stroke-linecap="round"/>
-                <!-- Badan (Sederhana) -->
-                <path d="M70 160 L 130 160 L 140 200 L 60 200 Z" fill="#e2e8f0" stroke="#333" stroke-width="4"/>
-                <!-- Tangan (Spatula) -->
-                <line x1="140" y1="170" x2="180" y2="150" stroke="#333" stroke-width="8" stroke-linecap="round"/>
-                <rect x="170" y="130" width="20" height="30" rx="2" fill="#475569"/>
-                <line x1="175" y1="135" x2="175" y2="155" stroke="white" stroke-width="2"/>
-                <line x1="185" y1="135" x2="185" y2="155" stroke="white" stroke-width="2"/>
-            </svg>
-
+           
             <div class="grid grid-cols-4 gap-4 z-10 w-4/5">
                 <button class="btn mission-art-button" onclick="navTo('mission-1')" aria-label="Dekomposisi">
                     <img src="btn-dekomposisi.png" alt="Dekomposisi">
@@ -65,7 +40,7 @@
                 </button>
             </div>
             
-            <button class="btn btn-purple mt-4 z-10 text-xl px-8 py-3 hidden" id="btn-quiz" onclick="navTo('quiz')">🏆 Masuk ke Tantangan Akhir!</button>
+            <button class="btn btn-purple mt-4 z-10 text-xl px-8 py-3 hidden" id="btn-quiz" onclick="navTo('quiz')">🏆 Kuis</button>
         </div>
 <div id="modal-guide" class="modal-overlay">
             <div class="panel max-w-lg w-full m-4 z-50">
