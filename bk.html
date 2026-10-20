@@ -16,10 +16,7 @@
 <div id="game-wrapper">
     <div class="kitchen-bg"></div>
     <div class="shelf"></div>
-<div class="top-nav">
-            <button class="btn" onclick="navTo('home')" title="Ke Beranda">
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--color-wood)"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
-            </button>
+<div class="top-nav home-nav">
             <div class="flex gap-2">
                 <button class="btn" onclick="showGuide()" title="Panduan">?</button>
                 <button class="btn" id="btn-audio" onclick="toggleAudio()" title="Suara">🔊</button>
@@ -68,7 +65,6 @@
                 </button>
             </div>
             
-            <button class="btn btn-blue mt-8 z-10 text-xl px-8 py-3" onclick="navTo('mission-1')">Mulai Petualangan!</button>
             <button class="btn btn-purple mt-4 z-10 text-xl px-8 py-3 hidden" id="btn-quiz" onclick="navTo('quiz')">🏆 Masuk ke Tantangan Akhir!</button>
         </div>
 <div id="modal-guide" class="modal-overlay">
